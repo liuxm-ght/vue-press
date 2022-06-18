@@ -6,6 +6,7 @@ const { mediumZoomPlugin } = require('@vuepress/plugin-medium-zoom')
 module.exports = {
   lang: 'zh-CN',
   title: 'Symon の blog',
+  base:'/vue-press/',
   description: '不管开始于哪个时刻,都是对的时刻。',
   port: 8004,
   theme: defaultTheme({
