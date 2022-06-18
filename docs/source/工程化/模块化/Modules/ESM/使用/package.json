@@ -1,0 +1,14 @@
+{
+  "name": "es6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "a.js",
+  "scripts": {
+    "build": "node --experimental-modules a.mjs",
+    "build2": "node a.js",
+    "build3": "node aa.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}

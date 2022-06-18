@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>css阻塞</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOMContentLoaded');
+      })
+    </script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+  </head>
+  <body>
+    <div>aaa</div>
+    <script>
+      console.log('如果script在css加载前面，不会阻塞JS的执行，DOMContentLoaded在html解析完成完成后直接触发');
+      console.log('如果script在css加载后面，会阻塞JS的执行，DOMContentLoaded在html解析完成、css加载完成后才触发');
+    </script>
+  </body>
+</html>
