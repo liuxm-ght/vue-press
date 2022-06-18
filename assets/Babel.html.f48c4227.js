@@ -1,0 +1,1 @@
+import{_ as a,o as t,c,a as e,b as o}from"./app.6cfd3ac5.js";const r={},s=e("h3",{id:"babel",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#babel","aria-hidden":"true"},"#"),o(" Babel")],-1),n=e("p",null,"ES next \u8F6C ES5",-1),_=[s,n];function l(d,i){return t(),c("div",null,_)}var b=a(r,[["render",l],["__file","Babel.html.vue"]]);export{b as default};
