@@ -2,6 +2,7 @@
   1. patch是整个virtaul-dom当中最为核心的方法
 
   2. 上代码
+  ```ts
     vm._update(vnode, hydrating)
     Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
       const vm: Component = this
@@ -101,11 +102,13 @@
         }
       }
     }
+  ```
     说明：patch主要做的是根据新旧vnode生成dom，vnode类型不同处理不同，
       初次patch时，真实vnode直接创建emptyVNode来创建DOM节点并插入parent上，组件vnode实例化组件；
       更新时，patchVnode比对新旧vnode
 
   3. 创建DOM   createElm
+  ```ts
     /* 
       *两种情况：
       *1. 组件，直接走createComponent，创建组件，组件mount流程
@@ -171,8 +174,10 @@
           nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)))
         }
       }
+  ```
 
   4. 组件Vnode createComponent
+  ```ts
     // IMPORT: 创建一个组件
     function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
       let i = vnode.data
@@ -202,8 +207,10 @@
         }
       }
     }
+  ```
 
   5. 比对vnode  patchVnode
+  ```ts
     function patchVnode (
       oldVnode,
       vnode,
@@ -241,8 +248,10 @@
       }
       ...
     }
+  ```
 
   6. diff比对子Vnodes updateChildren
+  ```ts
     function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
       let oldStartIdx = 0
       let newStartIdx = 0
@@ -307,6 +316,7 @@
         removeVnodes(oldCh, oldStartIdx, oldEndIdx)
       }
     } 
+  ```
     说明：
       diff的过程是：拿新旧vnode数组，先新旧开头比对，不成然后新旧结尾比对，不成然后新开头旧结尾比对，不成然后旧开头新结尾比对，不成在旧数组中生成key-id映射表，拿新开头在映射表中找，没找到创建新dom插入到旧数组开头位置去，找到了比对新旧的更新dom同时拷贝旧dom插入到旧数组开头位置去，清空旧数组对应的位置的内容是保留旧数组的长度，否则后面旧数组的位置就错乱了，找到了如果新旧不同，那么也创建新的dom插入到旧数组开头位置去；如此循环比对新旧数组的所有元素，当旧的比对完了，新数组还有，批量创建dom插入到父级DOM后面；当旧的还有，新的比对完了，那么批量删除旧DOM。
       至此，vnode的children的所有patch就完成了，旧DOM也更新了。
@@ -337,4 +347,4 @@
 
   10. 手写系列
     手写 Vue2 系列 之 patch —— diff
-    https://juejin.cn/post/6982341667483303950
+    [参考文章]('https://juejin.cn/post/6982341667483303950')

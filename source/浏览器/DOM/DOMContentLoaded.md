@@ -7,15 +7,17 @@
     分析：
       浏览器向服务器请求到了 HTML 文档后便开始解析，产物是 DOM（文档对象模型），到这里 HTML 文档就被加载和解析完成了。如果有 CSS 的会根据 CSS 生成 CSSOM（CSS 对象模型），然后再由 DOM 和 CSSOM 合并产生渲染树。有了渲染树，知道了所有节点的样式，下面便根据这些节点以及样式计算它们在浏览器中确切的大小和位置，这就是布局阶段。有了以上这些信息，下面就把节点绘制到浏览器上。
       JavaScript 可以阻塞 DOM 的生成，也就是说当浏览器在解析 HTML 文档时，如果遇到
-      <body>
-        <script type="text/javascript">
+    ```ts
+      < body>
+        < script type="text/javascript">
         console.log(document.getElementById('ele')); // null
-        </script>
+        </>
         <div id="ele"></div>
-        <script type="text/javascript">
+        < script type="text/javascript">
         console.log(document.getElementById('ele')); // <div id="ele"></div>
-        </script>
+        </>
       </body>
+    ```
       那么，因为 JavaScript 可以查询任意对象的样式，所以意味着在 CSS 解析完成，也就是 CSSOM 生成之后，JavaScript 才可以被执行。
 
   3. 总结：

@@ -15,6 +15,7 @@
   原理：
     为vm实例创造一个观察者，用来观察用到的数据的变化，然后去通知视图的更新
   代码：  
+  ```ts
     new Watcher(vm, updateComponent, noop, {
       before () {
         // 挂载后并且未销毁则调用 beforeUpdate
@@ -26,6 +27,7 @@
     updateComponent = () => {
       vm._update(vm._render(), hydrating)
     }
+  ```
   注意：
     updateComponent就是生成Vnode，产生Dom
   总结： 
@@ -37,11 +39,13 @@
   原理：
     通过render函数返回一个Vnode，Vnode代表的是对映的真实DOM节点。
   代码：
+  ```ts
     vm._render()
     return vnode = render.call(vm._renderProxy, vm.$createElement)
     vm._c = vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
     _createElement(context, tag, data, children, normalizationType)
     vnode = new VNode(tag, data, children,text, elm, context，componentOptions，asyncFactory)
+  ```
   注意：
     _createElement 会根据tag的类型来创建是节点Vnode，还是组件Vnode
     两者的区别是
@@ -56,6 +60,7 @@
   原理：
     根据vnode，通过平台对应的节点操作方法，创造出对应的节点，最终挂载到页面去
   代码：
+  ```ts
     vm._update(vnode, hydrating)
     vm.$el = vm.__patch__(prevVnode, vnode)
     Vue.prototype.__patch__ = inBrowser ? patch : noop
@@ -124,6 +129,7 @@
         insert(parentElm, vnode.elm, refElm)
       }
     }
+  ```
   注意：
     组件实例化里的parentElm是undefined的
     insert的顺序是从子到父的挂载
