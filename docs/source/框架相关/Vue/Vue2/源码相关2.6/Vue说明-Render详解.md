@@ -23,27 +23,34 @@
 
   3. render如何产生？
     1. 手写render函数
+    ```ts
       render: function (createElement) {
         return createElement(
           'h' + this.level,   // tag name 标签名称
           this.$slots.default // 子组件中的阵列
         )
       }
+    ```
     2. template编译生成
       使用：
+      ```ts
         new Vue({
           template:'<div>template编译生成</div>'
         })
+      ```
       通过compileToFunctions可以转为{ render, staticRenderFns }
     3. .vue编辑生产
       使用：
         .vue文件中，
+      ```html
         <template>
           <div id="app">
             .vue文件
           </div>
         </template>
+      ```
       通过vue-cli脚手架编译后可以转为
+      ```ts
         var render = function(){
           var _vm = this
           var _h = _vm.$createElement
@@ -58,6 +65,7 @@
         var staticRenderFns = []
         render._withStripped = true
         export { render, staticRenderFns }
+      ```
 
   4. vnode的种类？
     1. 组件vnode(ComponentVNode 组件节点)
@@ -85,9 +93,12 @@
       }
     3. vm.$createElement 创建vnode节点
       在initRender初始中定义了----《Vue说明-初始化阶段.md》有详细介绍
+      ```ts
         vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
         vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
+      ```
       代码如下
+      ```ts
         const SIMPLE_NORMALIZE = 1
         const ALWAYS_NORMALIZE = 2
         function createElement (
@@ -223,11 +234,13 @@
           )
           return vnode
         }
+      ```
   
  
   6. 手写miniRender
     eg：
       1. 手动写render
+      ```ts
         var vm = function(){}
         function createEl(a,b){
           console.log(a,b);
@@ -238,8 +251,9 @@
         }
         
         render.call(vm,vm.$createEl);  // div1 div2
-
+      ```
       2. 编译 template为render
+      ```ts
         // vm构造函数
         var vm= function(){};
         // 创建vdom函数
@@ -257,7 +271,7 @@
 
         // 执行调用
         render.call(vm, vm.$createEl ); //    div1 div2
-
+      ```
 
 
   7. 总结：
