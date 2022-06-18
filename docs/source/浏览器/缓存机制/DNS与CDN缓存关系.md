@@ -49,18 +49,22 @@
 
 #### DNS预解析
   * 原理：当加载一个html时，会自动解析a标签的href链接为IP地址，并缓存。
+    ```ts
       // index.html
-      <html>
+      < html>
         <a href="test.baidu.com"></a>
-      </html>
+      </>
+    ```
     上面这段代码，当加载html文件时，会预先解析a标签href，并将IP缓存。当点击a标签时，就不需要DNS解析了。
 
   * 问题：HTTPS不会自动进行预解析。
     解决：需要手动添加在整个网站的入口页面。
+    ```ts
       添加单条解析：
-      <link rel="dns-prefetch" href="//img.alicdn.com"></link>
+      < link rel="dns-prefetch" href="//img.alicdn.com"></>
       所有链接进行解析：
-      <meta http-equiv="x-dns-prefetch-control" content="on">
+      < meta http-equiv="x-dns-prefetch-control" content="on">
+    ```
 
 ### CDN 
 #### CDN 

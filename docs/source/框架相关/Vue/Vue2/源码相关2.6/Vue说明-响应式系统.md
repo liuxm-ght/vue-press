@@ -9,6 +9,7 @@
 
   ##### Vue是如何劫持数据的？
   例如：
+  ```ts
     const data = {
       name: 'device',
       formData: {
@@ -16,9 +17,11 @@
         select: []
       },
     }
+  ```
   需要劫持这个data对象，Vue是如何劫持的？
   1. Object.defineProperty 为基础
   代码：
+  ```ts
     let val = data[name]
     Object.defineProperty(data, 'name', {
       enumerable: true,
@@ -32,6 +35,7 @@
         val = newVal
       }
     }
+  ```
   说明：
     当读取data.name的时候会打印clg('name 被读取了')，当设置data.name = 'list'的时候会打印clg('name 被设置了')；
     如此可见，data的这个name属性被劫持了。
@@ -39,6 +43,7 @@
   2. Observer类 将对象的所有属性转为可监测的(响应式某个对象)
     由于Object.defineProperty的弊端限制了，Object.defineProperty只能劫持对象的某个属性，不能劫持整个对象，所以需要劫持data的所有属性的时候，需要遍历这个对象的属性来处理，对象的属性可能包含对象，所以需要递归处理；
   代码：
+  ```ts
     observe(data, true /* asRootData */) 
     function observe (value, asRootData){
       if (!isObject(value) || value instanceof VNode) {return} // 如果不是对象或数组 或是虚拟dom ，retrun
@@ -76,6 +81,7 @@
         set()...,
       }
     }
+  ```
   说明：
     Observer类的作用是提供walk等方法来劫持对象属性，并且用value记录了这个被劫持的对象
     asRootData标记这个是根data对象，后面data的属性如果是对象的话不为true 
@@ -92,6 +98,7 @@
   原理：
     JS中监听数据变化的工作是Object.defineProperty来做的，那么观察者需要知道数据变化了，就需要Object.defineProperty来告诉观察者数据变化了，然后观察者去执行更新操作，如果告诉观察者呢？Object.defineProperty需要把观察者记录起来，因为可能有多个观察者，所以用数组来存放这些观察者们，这样数据更新，Object.defineProperty去通知记录的观察者们，可以去更新了。
   代码：
+  ```ts
     class Dep {
       constructor () {
         this.id = uid++ //订阅器唯一标识
@@ -154,6 +161,7 @@
         if (Array.isArray(e)) { dependArray(e) } //迭归处理  
       }
     }
+    ```
   说明：
     订阅器的作用就是收集观察者，并提供增删和校验观察者的功能，同时可通知观察者去更新视图
     当父对象的属性被读取的时候，不仅会将观察者添加到当前属性的dep中去，也会将观察者添加到其(子对象属性)的dep中去，如果是子数组属性，还会遍历数组，也将观察者添加到数组中是对象的元素的dep中去；
@@ -180,6 +188,7 @@
   原理：
     Watcher可以被添加到订阅器中去，同时可以更新视图；如何被添加呢？就是通过读数据，触发数据的get，同时全局记录了当前观察者是谁，这样数据的get中可以将观察者添加到它的订阅器中去；数据变化时，数据就可以在set中，通知订阅器的观察者去更新视图了。
   代码：
+  ```ts
     class Watcher {
       constructor (
         vm: Component, //vue或vueComponent实例
@@ -242,6 +251,7 @@
         return obj
       }
     }
+  ```
   说明：
     Dep.target用于在全局标记了当前观察者是谁
     初始化：在vue初始化的时候，观察者Watcher，默认触发get()去渲染视图，此过程中会读取数据的一些属性，会触发其订阅器去收集观察者，由于Dep.target被标记了，所以当前观察者Watcher会被添加到对应的订阅器中去；
@@ -256,6 +266,7 @@
     为什么要异步更新视图？
       如果data中的多个数据被短时间内或同一进程内被改变，那么会通知所有观察者去更新视图，假如某个观察者订阅了data的多个数据，那么它会被执行多次更新，如果是大量循环操作，会造成严重的渲染性能问题；所以vue做了异步更新处理，同一进程下，将所有更新先异步挂载起来，执行完当前循环机制改变数据，等待下一个循环机制再去更新视图
   代码：
+  ```ts
     const queue: Array<Watcher> = []
     let has: { [key: number]: ?true } = {}
     let waiting = false
@@ -292,6 +303,7 @@
         }
       }
     }
+  ```
   说明：
     如此可见updated钩子也是由子到父的，更mounted一样
     如此可见视图的更新是等待上一次浏览器循环机制完成后，此时数据全部是最新的了，因为数据的更新是同步的，但是视图的更新是在nextTick后的下一个浏览器循环机制中处理的，此时所有数据都是最新的了
@@ -303,6 +315,7 @@
     当this.arr1.push(xx)时，为了使this.arr1.xx也是响应式的，必须对其进行劫持
     如何劫持？通过重写数组常用的方法，提前进行劫持这些新增或修改的元素。
     代码：
+    ```ts
       常用方法：
       const arrayProto = Array.prototype
       const arrayMethods = Object.create(arrayProto) //拷贝的arrayProto
@@ -354,6 +367,7 @@
           observe(items[i])
         }
       }
+    ```
     说明：
       数组的响应式处理，原理就是通过重写原生数组原型对象上的方法来处理的，通过Object.defineProperty重新定义读取数组原型对象上的方法时返回的值，即执行数组原型对象上的方法时执行的函数被重新定义了，在新的函数里对添加的参数进行了响应式处理，并最后都进行了手动更新视图
       但是也有弊端，就是arr1[0] = xx ,arr1.length = 0 //类似这样的修改数组的时候，并不会触发更新，因为这样的赋值操作并没有被重写

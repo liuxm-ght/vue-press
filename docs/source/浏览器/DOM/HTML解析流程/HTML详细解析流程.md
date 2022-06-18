@@ -23,26 +23,26 @@
             * 注意：符号化和构建树是并行操作的，就是说解析到一个开始标签，就构建一个Dom节点
             * 在创建解析器的同时，也会创建 Document 对象。
             在符号化的过程中，生成一个标记对象(node)会发送给树构造器，构造器接收到标记对象(node)后，会将标记对象(node)压入其维护的一个栈中去，同时往 Document对象 上添加一个DOM节点，如果是文本标记对象(node)\没闭合标签的标记对象(node)，那么直接加到DOM上去，不压入栈，如果是结束标签不会入栈，但会跟栈顶元素匹配，如果匹配上，弹出栈顶，处理层级关系，继续接受后面的标记对象(node)。当栈空了，即html标记对象(node)也加入dom了，DOM树构建完毕。
-                <!-- (我的理解是，解析器维护了一个栈，符号化过程中遇到一个开始标签就入栈，并创建一个DOM对象，继续解析，遇到非结束标签继续生成Token并压入栈，同时创建一个DOM对象，添加一个parent属性指向前一个Token，直到遇到结束Token，弹出栈顶Token(即销毁了)，加它的parent的children数组中，这样就维护了DOM tree的关系) -->
-                <!-- https://blog.csdn.net/Alan_1550587588/article/details/80297765 -->
-                <!-- http://www.dailichun.com/2018/03/12/whenyouenteraurl.html -->
+                <!-- (我的理解是，解析器维护了一个栈，符号化过程中遇到一个开始标签就入栈，并创建一个DOM对象，继续解析，遇到非结束标签继续生成Token并压入栈，同时创建一个DOM对象，添加一个parent属性指向前一个Token，直到遇到结束Token，弹出栈顶Token(即销毁了)，加它的parent的children数组中，这样就维护了DOM tree的关系)
+                https://blog.csdn.net/Alan_1550587588/article/details/80297765
+                http://www.dailichun.com/2018/03/12/whenyouenteraurl.html -->
 
   2. 加载与解析过程的阻塞性问题(window.onload和DOMContentLoaded有什么区别？)
-      <!-- (《DOMContentLoaded.md》篇也有部分说明，但这里更着重阻塞性问题) -->
+          <!-- (《DOMContentLoaded.md》篇也有部分说明，但这里更着重阻塞性问题) -->
       整个dom的解析过程是顺序，并且渐进式的。
-      <!-- 
-        html从第一行开始解析，遇到外联资源(外联css、外联javascript、image、iframe等)就会请求对应资源，那么请求过程是否会阻塞dom的解析过程呢？
+          <!-- 
+            html从第一行开始解析，遇到外联资源(外联css、外联javascript、image、iframe等)就会请求对应资源，那么请求过程是否会阻塞dom的解析过程呢？
 
-          答案是看情况，有的资源会，有的资源不会。
-        
-        下面按是否会阻塞页面解析分为两类：
-          阻塞型与非阻塞型，注意这里区分两类资源的标志是document对象派发DOMContentLoaded事件的时间点，认为
-      -->
+              答案是看情况，有的资源会，有的资源不会。
+            
+            下面按是否会阻塞页面解析分为两类：
+              阻塞型与非阻塞型，注意这里区分两类资源的标志是document对象派发DOMContentLoaded事件的时间点，认为
+          -->
       派发DOMContentLoaded事件才表示dom树构建完成。
 
       1. 阻塞型
-        会阻塞dom解析的资源主要包括有：
-          <!-- * 内联css   应该是阻塞渲染树生成，不阻塞dom的解析-->
+          会阻塞dom解析的资源主要包括有：
+              <!-- * 内联css   应该是阻塞渲染树生成，不阻塞dom的解析-->
           * 内联js
           * 外联普通js
             上面这两种其实差不多，dom解析遇到script标签，暂停，(加载外联js)，然后执行js，完了再继续dom解析，dom解析完了，最后派发DOMContentLoaded事件
@@ -51,7 +51,7 @@
           * script标签之前的外联css
             css资源是不应该阻塞dom的解析的，但是如果后面有js代码要执行，js代码可能调用类似getComputedStyle API来操作样式，所以js的执行必现等待css加载解析完成，由于js的执行会阻塞dom的解析，所以script标签之前的外联css资源会阻塞dom的解析
       2. 非阻塞型
-        不会阻塞dom解析的资源主要包括有：
+         不会阻塞dom解析的资源主要包括有：
           * js标签之后的外联css
             一般情况css的加载解析是不会阻塞dom的加载和解析的
           * image
@@ -62,5 +62,7 @@
             执行有两种情况：
               1. dom解析完，js还没加载完，js不会阻塞dom的解析，及DOMContentLoaded事件的派发
               2. dom未解析完，js加载完了，会马上执行js，阻塞dom的解析及DOMContentLoaded事件的派发
-      <!-- 详细说明将参考文章 https://juejin.cn/post/6844903745730396174 -->
+
+
+              <!-- 详细说明将参考文章 https://juejin.cn/post/6844903745730396174 -->
 
