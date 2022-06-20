@@ -1,12 +1,12 @@
 ---
-title: 简介
+title: TMX-UI
 ---
 
 # 关于 TMX UI
 
 tmx-ui 是 ThingsMatrix 的一个业务级的 UI 组件库
 
-> 该项目为 ThingsMatrix 的前端业务组件库，旨在统一组件的 UI 样式，以及减少冗余的组件代码。该项目是基于 iView 4.0+版本进行二次开发。
+> 该项目为 ThingsMatrix 的前端业务组件库，旨在统一组件的 UI 样式，以及减少冗余的组件代码。该项目是基于 iView 2.0+版本进行二次开发。
 
 # 特性
 
@@ -20,10 +20,9 @@ tmx-ui 是 ThingsMatrix 的一个业务级的 UI 组件库
 6. 持续维护和更新
 
 # 预览
-![图片](./images/tmx-ui.jpg)
-<el-carousel indicator-position="outside">
-  <el-carousel-item v-for="item in ui" :key="item">
-    <img :src="item">
+<el-carousel :interval="4000" type="card" height="200px">
+  <el-carousel-item v-for="item in imgList" :key="item">
+    <img :src="item" >
   </el-carousel-item>
 </el-carousel>
 
@@ -31,7 +30,12 @@ tmx-ui 是 ThingsMatrix 的一个业务级的 UI 组件库
   export default {
     data() {
       return {
-        ui:['./images/tmx-ui.jpg']
+        imgList:[],
+      }
+    },
+    mounted(){
+      for(var i = 1 ;i < 4 ;i++){
+        this.imgList.push('/project/公司项目/tmx-ui/tmx-ui'+i+'.jpg')
       }
     }
   }

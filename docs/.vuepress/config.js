@@ -1,3 +1,4 @@
+const path = require('path')
 const { defaultTheme } = require('@vuepress/theme-default')
 const routerJson1 = require('../../vuePressMap1.json')
 const routerJson2 = require('../../vuePressMap2.json')

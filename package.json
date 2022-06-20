@@ -12,6 +12,7 @@
     "creat:map1": "node readFile.js docs/source source vuePressMap1.json",
     "creat:map2": "node readFile.js docs/project project vuePressMap2.json",
     "creat:map3": "node readFile.js docs/person person vuePressMap3.json ",
+    "add:gh-pages": "git subtree push --prefix=docs origin gh-pages",
     "deploy": "gh-pages -d docs/.vuepress/dist"
   },
   "devDependencies": {
