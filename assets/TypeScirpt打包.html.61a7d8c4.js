@@ -1,0 +1,1 @@
+import{_ as t,o as a,c as r,b as e,d as c}from"./app.85e25c47.js";const s={},_=e("h3",{id:"ts\u6253\u5305",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#ts\u6253\u5305","aria-hidden":"true"},"#"),c(" TS\u6253\u5305")],-1),o=[_];function n(d,i){return a(),r("div",null,o)}var l=t(s,[["render",n],["__file","TypeScirpt\u6253\u5305.html.vue"]]);export{l as default};
