@@ -2,6 +2,7 @@
 node_modules
 .cache
 .temp
+dist
 
 
 # local env files

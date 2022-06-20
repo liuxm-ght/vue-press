@@ -64,6 +64,7 @@ TMX-IOT核心SaaS系统 是 ThingsMatrix 的一个核心Saas系统
     </el-carousel>
   </el-tab-pane>
 </el-tabs>
+<img src="/project/公司项目/iot/access/1.png">
 
 <script>
   export default {
@@ -78,19 +79,19 @@ TMX-IOT核心SaaS系统 是 ThingsMatrix 的一个核心Saas系统
     },
     mounted(){
       for(var i = 1 ;i < 7 ;i++){
-        this.imgList1.push('/project/公司项目/iot/access/'+i+'.png')
+        this.imgList1.push('/vue-press/project/公司项目/iot/access/'+i+'.png')
       }
       for(var i = 1 ;i < 8 ;i++){
-        this.imgList2.push('/project/公司项目/iot/insight/'+i+'.png')
+        this.imgList2.push('/vue-press/project/公司项目/iot/insight/'+i+'.png')
       }
       for(var i = 1 ;i < 6 ;i++){
-        this.imgList3.push('/project/公司项目/iot/cmp/'+i+'.png')
+        this.imgList3.push('/vue-press/project/公司项目/iot/cmp/'+i+'.png')
       }
       for(var i = 1 ;i < 6 ;i++){
-        this.imgList4.push('/project/公司项目/iot/fota/'+i+'.png')
+        this.imgList4.push('/vue-press/project/公司项目/iot/fota/'+i+'.png')
       }
       for(var i = 1 ;i < 6 ;i++){
-        this.imgList5.push('/project/公司项目/iot/home/'+i+'.png')
+        this.imgList5.push('/vue-press/project/公司项目/iot/home/'+i+'.png')
       }
     }
   }
