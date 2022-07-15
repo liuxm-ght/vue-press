@@ -1,4 +1,18 @@
-#### Vue 一般响应式流程：
+### 渲染流程
+  1. Vue的渲染流程
+      1. 初次渲染：
+          1. vue实例化、初始化[init](./Vue说明-初始化阶段.md)、合并参数mergeOptions、数据[响应式](./Vue说明-响应式系统.md)处理Observe、开始挂载[mount](./Vue说明-挂载阶段.md)、执行mountComponent
+          2. 实例化渲染watcher、执行updateComponent、执行[render](./Vue说明-Render详解.md)函数生成vnode、执行update函数根据vnode生成dom挂载到app上
+          3. update函数执行过程是，[patch](./Vue说明-Patch详解.md)比对新旧vnode，通过createElm创建真实dom并挂载，如果patch过程中，发现是普通节点，直接调用DOMAPI创建真实dom并挂载vnode上，然后递归调用createChildren处理子节点，最终将生成的dom挂载到父节点上去；如果patch过程中，发现是组件vnode，会执行createComponent，进入组件的渲染环节；
+
+  2. 组件的渲染流程
+      1. 注册组件：通过Vue.component注册组件，其原理是vue.extend原型链继承vue构造函数的属性方法，产生组件构造函数componentCtor，挂载到options.component上
+      2. 渲染流程：组件渲染流程跟vue的渲染流程一样，最终组件生成的真实dom的挂载到其父真实DOM节点上
+          1. new componentCtor，执行vueComponent实例化、初始化init、合并参数mergeOptions、数据响应式处理Observe、开始挂载mount、执行mountComponent
+          2. 实例化渲染watcher、执行updateComponent、执行render函数生成vnode，执行update函数根据vnode生成真实dom挂载到app上
+          3. update的过程是执行patch比对新旧vnode，通过createEle来创建真实dom，如果是非组件vnode，直接调用DOM api创建真实dom，并挂载到父dom节点；如果是组件vnode，执行createComponent，实例化组件Ctor，进入组件的渲染流程，最后组件内部完成DOM的挂载，将生成的dom挂到组件vnode.elm上，然后将vnode.elm挂载到组件父真实节点Dom上去；
+
+### Vue 一般响应式流程：
   在此之前对Vue构造函数及原型对象进行了一系列的初始化，使得Vue实例有一系列的属性和方法
 1. new Vue(options) -> //src/core/instance/index.js
 2. _init(options) Vue实例初始化
@@ -70,7 +84,7 @@
   4. vm._isMounted = true 
   5. callHook(vm, 'mounted')
 
-#### Vue组件的首次渲染流程？
+### Vue组件的首次渲染流程？
   在此之前对Vue构造函数及原型对象进行了一系列的初始化，使得Vue实例有一系列的属性和方法
   并且经过了上面1234一系列初始化、数据劫持、开始挂载5
   挂载过程跟6一样，只是在执行render函数时，会在_createElement判断是否为组件，是组件走创建组件流程
@@ -217,7 +231,7 @@
     但是此时的子vnode为何有children呢？因为在子组件render的时候(返回的是非组件vnode)，非组件vnode上有children。
 
 
-#### Vue组件更新渲染流程？
+### Vue组件更新渲染流程？
   例子: 当切换hello儿子2时Vue是如何运转的？
   1. vueRouter通过监听hashchange来改变this._route的值来通知Vue去更新组件的；
   2. 哪些组件订阅了这个_route属性呢？由于vueRouter在install时全局mixin了beforeCreate方法
@@ -239,7 +253,7 @@
   9. 继续后面没完成的wathcer的更新。
 
 
-#### 总结
+### 总结
   1. 初次渲染：
     1. vue 实例化，做了options合并，数据劫持，监听数据变化；
     2. 开始挂载，启动watcher监听，执行render生成vnode，根据vnode生成真实dom，挂载到页面。
@@ -250,4 +264,4 @@
     在更新过程中，如果父级组件下有多个子组件(vnodes)，而子组件中如果是组件vnode，那么比对过程中只比对当前新旧组件vnode，而不继续深入比对其子组件，如果不是组件vnode,是普通节点vnode，那么会深入diff比对其子组件，diff的过程会操作旧的真实dom进而直接更新页面；
     那么组件vnode何时深入比对其子组件呢？如果这个组件vnode有订阅对应的数据，那么数据更新，也会触发起watcher，进而重新render其生成vnode，去比对它的新旧vnode，diff其子组件们，更新真实dom；
   
-#### 完  
+### 完  

@@ -11,4 +11,11 @@ features:
 - title: 博客
   details: 分享技术与生活乐趣
 footer: Created by © Symon 
+actions:
+  - text: 项目介绍
+    link: /project/intro.md
+    type: primary
+  - text: 个人博客
+    link: /source/intro.md
+    type: secondary
 ---

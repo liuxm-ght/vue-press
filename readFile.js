@@ -33,6 +33,7 @@ function readFile(dirPath,parent){
         const obj = {
           text: fileName,
           link: plink,
+          children:[]
         }
         if (fileName === 'intro.md') {
           obj.text = 'Intro'

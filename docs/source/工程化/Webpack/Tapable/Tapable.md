@@ -13,7 +13,7 @@
     Tapable 提供了一系列事件的发布订阅 API ，通过 Tapable我们可以注册事件，从而在不同时机去触发注册的事件进行执行。
     Webpack 中的 Plugin 机制正是基于这种机制实现在不同编译阶段调用不同的插件从而影响编译结果。
 
-  3. Tapable 官方文档提供了这九种钩子：
+  3. Tapable 官方文档提供了这九种钩子：[例子](./使用例子.md)
   ```ts
       const {
         <!--  同步串行	不关心监听函数的返回值 -->
@@ -196,7 +196,7 @@
         }
       ```
 
-  8. Tapable 基本用法
+  8. Tapable [基本用法](./使用例子.md)
       1. 实例Hook new Sync* / new Async*
       2. 注册事件 tap
       3. 发布Hook call
@@ -222,6 +222,7 @@
 
       2. 详细：
         后面有空研究
+
         [参考文章：Table详解](https://juejin.cn/post/7040982789650382855#heading-24)
 
 

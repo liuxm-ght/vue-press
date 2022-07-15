@@ -26,10 +26,11 @@
     3. 将编译得到的字符串代码，通过 new Function(codeStr) 转换成可执行的函数
     4. 缓存编译结果
     代码：
+  ```ts
       // 编译模版，得到 动态渲染函数和静态渲染函数
       const { render, staticRenderFns } = compileToFunctions(template, {
         // 在非生产环境下，编译时记录标签属性在模版字符串中开始和结束的位置索引
-        outputSourceRange: process.env.NODE_ENV !== 'production',
+        outputSourceRange: process . env . NODE_ENV !== 'production',
         shouldDecodeNewlines,
         shouldDecodeNewlinesForHref,
         // 界定符，默认 {{}}
@@ -66,12 +67,13 @@
           return (cache[key] = res)
         }
       }
-
+  ``` 
   4. compile 编译函数 --- 合并基础配置，根据核心编译器，返回编译结果
     编译函数，做了两件事：
     1. 选项合并，将 options 配置项 合并到 finalOptions(baseOptions) 中，得到最终的编译配置对象
     2. 调用核心编译器 baseCompile 得到编译结果
     3. 将编译期间产生的 error 和 tip 挂载到编译结果上，返回编译结果
+  ```ts
     const baseOptions: CompilerOptions = {
       expectHTML: true,
       // 处理 class、style、v-model
@@ -129,8 +131,10 @@
       。。。
       return compiled //返回 compiled编译结果
     }
+  ```
   
   5. baseCompile 编译器核型
+  ```ts
     function baseCompile (
       template: string,
       options: CompilerOptions
@@ -151,6 +155,7 @@
         staticRenderFns: code.staticRenderFns
       }
     }
+  ```
     1. parse 解析器 --- 将模版解析成AST
 *******暂停 由于编译阶段源码过于庞大，后续有空再详细看源码，现在只是备注
     2. optimize 优化 --- 遍历AST进行静态标记
@@ -159,6 +164,7 @@
 *******暂停 由于编译阶段源码过于庞大，后续有空再详细看源码，现在只是备注
 
   6. 生成的AST结构
+  ```ts
     const element = {
       type: 1,
       tag,
@@ -218,10 +224,12 @@
       children: [],
       plain: boolean,
     }
+  ```
 
   7. 静态节点标记
 
   8. 从 AST 生成渲染函数
+  ```ts
     /** 
       *从 AST 生成渲染函数
       *@returns {
@@ -248,6 +256,7 @@
         staticRenderFns: state.staticRenderFns
       }
     }
+  ```
 
   9. 总结：
     编译阶段的整体流程：

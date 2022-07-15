@@ -1,5 +1,6 @@
-#### 异步组件渲染？
-    /**
+### 异步组件渲染
+  异步组件加载方式：
+   ```ts
     * Vue.component('async-webpack-example',fn)
     * 异步组件加载（注册）方式有三种：
     *  1. 普通函数方式 function (resolve, reject) {require(['./my-async-component'], resolve)}
@@ -12,6 +13,8 @@
     *        timeout: 3000   // 最长等待时间。超出此时间则渲染错误组件。默认：Infinity
     *     })
     */
+  ```
+
   以 普通函数方式 加载为例子:
   1. 在Vue.component注册异步组件时，第二个参数是个function
   2. 所以进入createComponent流程来返回vnode
@@ -26,7 +29,8 @@
   11. Ctor不为undefined,继续后面流程,返回组件vnode;
   12. 继续后面的流程。
 
-  /**
+
+### 总结
   * 启动加载异步组件，并处理回调结果，返回一个组件构造器
   * 1. 默认返回factory.resolved，由于是初次进入，所以resolved是undefined的，则Ctor === undefined
   * 2. 如果factory是对象且有loading属性，那么先返回loadingComp组件
@@ -36,14 +40,9 @@
   * 6. 那么会执行后面的同步函数，走正常的render、patch 过程
   * 总结：
   *  异步组件实现的本质是 2 次渲染，除了 0 delay 的高级异步组件第一次直接渲染成 loading 组件外，
-  *  其它都是第一次渲染生成一个注释节点，当异步获取组件成功后，再通过 forceRender 强制重新渲染，
+  *  其它都是第一次渲染生成一个注释节点，当异步获取组件成功后，再通过 [forceRender](./Vue说明-全局API.md) 强制重新渲染，
   *  这样就能正确渲染出我们异步加载的组件了。
-  **/ 
 
-
-#### 路由懒加载？
-
-
-10. 手写系列
-    手写 Vue2 系列 之 异步更新队列
-    https://juejin.cn/post/6984939784133148685
+### 路由懒加载？
+[手写 Vue2 系列 之 异步更新队列](https://juejin.cn/post/6984939784133148685)
+    

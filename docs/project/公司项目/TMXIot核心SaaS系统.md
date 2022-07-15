@@ -8,6 +8,12 @@ TMX-IOT核心SaaS系统 是 ThingsMatrix 的一个核心Saas系统
 
 > IOT物联网设备管理系统，主要通过对设备、平台和连接的深度整合，实现对企业用户设备资产的管理、数据分析、设备固件远程升级等服务，达到提升用户的业务流程的目的。
 
+# 技术框架
+> Vue全家桶 + graphql + axios + Tmx-UI + view-design
+
+> baiduMap + googleMap + echarts 
+
+> webpack + eslint + jest
 # 预览
 
 <el-tabs tab-position="left" style="height: 380px" class="demo-tabs">
@@ -64,7 +70,6 @@ TMX-IOT核心SaaS系统 是 ThingsMatrix 的一个核心Saas系统
     </el-carousel>
   </el-tab-pane>
 </el-tabs>
-<img src="/project/公司项目/iot/access/1.png">
 
 <script>
   export default {
@@ -81,7 +86,7 @@ TMX-IOT核心SaaS系统 是 ThingsMatrix 的一个核心Saas系统
       for(var i = 1 ;i < 7 ;i++){
         this.imgList1.push('/vue-press/project/公司项目/iot/access/'+i+'.png')
       }
-      for(var i = 1 ;i < 8 ;i++){
+      for(var i = 1 ;i < 9 ;i++){
         this.imgList2.push('/vue-press/project/公司项目/iot/insight/'+i+'.png')
       }
       for(var i = 1 ;i < 6 ;i++){

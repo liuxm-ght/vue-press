@@ -19,7 +19,7 @@
 
       1. keepalive使用render来渲染组件，通过this.$slots.default来获取槽子组件
       2. 组件内部维护一个cache数组来缓存使用符合规则include...的组件
-      3. 通过槽子组件的name或tag来当做cache的key
+      3. 通过槽子组件的name或tag来当做cache的key，当updated是就会执行cacheVNode查找缓存
       4. 当缓存超过最多存储数量时，删除最老的组件，即下标为0的组件
       5. keepalive组件销毁的时候，清空cache
 

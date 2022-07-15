@@ -8,6 +8,12 @@ tmx-ui 是 ThingsMatrix 的一个业务级的 UI 组件库
 
 > 该项目为 ThingsMatrix 的前端业务组件库，旨在统一组件的 UI 样式，以及减少冗余的组件代码。该项目是基于 iView 2.0+版本进行二次开发。
 
+# 技术框架
+> Vue全家桶 + view-design
+
+> webpack + gulp
+
+> vuepress + maven
 # 特性
 
 <br>
