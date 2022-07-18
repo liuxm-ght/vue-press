@@ -1,1 +1,0 @@
-import{_,o as s,c as t,b as e}from"./app.2eaca68b.js";var r="/vue-press/assets/\u524D\u7AEF\u77E5\u8BC6\u4F53\u7CFB.8ae75053.jpg";const a={},c=e("p",null,[e("img",{src:r,alt:"\u524D\u7AEF\u77E5\u8BC6\u4F53\u7CFB"})],-1),o=[c];function n(l,i){return s(),t("div",null,o)}var p=_(a,[["render",n],["__file","\u524D\u7AEF\u77E5\u8BC6\u4F53\u7CFB.html.vue"]]);export{p as default};

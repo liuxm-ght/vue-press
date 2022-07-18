@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-26a01a28","path":"/source/JS%E7%9B%B8%E5%85%B3/JS%E5%9F%BA%E7%A1%80/ES6/async.html","title":"","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{"contributors":[{"name":"liuxm-ght","email":"xiaoming.liu@things-matrix.com","commits":1}]},"filePathRelative":"source/JS\u76F8\u5173/JS\u57FA\u7840/ES6/async.md"}');export{t as data};
