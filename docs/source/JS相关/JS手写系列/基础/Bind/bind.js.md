@@ -12,6 +12,8 @@
       1. call：手写函数内this指向绑定函数fn，给绑定对象context添加fn属性，内部eval执行context.fn(args)，eval保证环境干净
       2. apply：与call不同的是，参数的处理，call的args是arguments.slice(1)，apply的参数是传入的数组arr
       3. bind：与call、apply完全不同，但是有借用到apply；bind返回一个函数，该函数寄生继承了绑定函数fn的公共属性，返回的函数执行时执行的是绑定函数，绑定函数绑定的绑定对象，由它的用途决定，如果是构造函数，其绑定对象是new创建的空对象，否则是传入的绑定对象
+  4. 终结理解：
+      * 其实就是将函数当做绑定对象的属性，当call、apply执行函数时，this自然就指向了绑定对象，bind只是不立即执行。
 
 ### Call
 ```ts

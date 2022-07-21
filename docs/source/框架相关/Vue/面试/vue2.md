@@ -22,8 +22,10 @@
             * V是view视图层
             * VM是view-model视图数据交互层
     * 组件化
+    
         每个模块由多个功能组件组成，好处是降低耦合度，方便定位调试问题，可维护度高
     * 指令系统
+
         指令主要是为了方便操作dom节点
 
 ### v-show和v-if？
@@ -56,7 +58,7 @@
 
 ### 前端权限控制可以分为四个方面：
 1. 路由权限
-    1. 方案一： 初始化即挂载全部路由，并且在路由上标记相应的权限信息，每次路由跳转前做校验
+    1. 方案一： 初始化即挂载全部路由，并且在路由上标记相应的权限信息，每次路由跳转前做校验router.beforeEach里做校验
     2. 方案二：
         * 初始化的时候先挂载不需要权限控制的路由，比如登录页，404等错误页。如果用户通过URL进行强制访问，则会直接进入404，相当于从源头上做了控制
         * 登录后，获取用户的权限信息，然后筛选有权限访问的路由，在全局路由守卫里进行调用addRoutes添加路由
@@ -64,7 +66,7 @@
     1. 方案一：按钮权限也可以用v-if判断，但是如果页面过多，每个页面页面都要获取用户权限role和路由表里的meta.btnPermissions，然后再做判断
     2. 方案二：通过自定义指令进行按钮权限的判断
 3. 菜单权限
-    菜单权限可以理解成将页面与理由进行解耦
+    菜单权限可以理解成将页面与路由进行解耦
     1. 方案一：菜单与路由分离，菜单由后端返回
     2. 方案二：菜单和路由都由后端返回
 4. 接口权限
@@ -304,7 +306,15 @@ this.$parent.emit('add')
   3. 方法有bind、inserted、update、componentUpdated、unbind
   4. 所有方法都有参数：el、binding、vnode、oldVnode
 
-### dd
+### Vue错误处理 
+
+1. 后端接口错误：通过axios的interceptor实现网络请求的response先进行一层拦截
+2. 代码逻辑问题：设置全局错误处理函数 Vue.config.errorHandler
+
+* handleError在需要捕获异常的地方调用，首先获取到报错的组件，之后递归查找当前组件的父组件，依次调用errorCaptured 方法，在遍历调用完所有 errorCaptured 方法或 errorCaptured 方法有报错时，调用 globalHandleError 方法
+* globalHandleError调用全局的 errorHandler 方法，再通过logError判断环境输出错误信息
+* invokeWithErrorHandling更好的处理异步错误信息
+* logError判断环境，选择不同的抛错方式。非生产环境下，调用warn方法处理错误
 
 ### dd
 
